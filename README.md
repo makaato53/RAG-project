@@ -40,3 +40,31 @@ Copy
 - **Chunking:**  
   For lengthy documents, split the text into smaller chunks. This ensures that the retrieval system can locate and return the most relevant parts when a query is made.
 
+# CUDA RAG Chatbot with Local LLM
+
+## Updated Features
+- **Local LLM Integration:** Uses Hugging Face's FLAN-T5 model for response generation, eliminating the need for API keys
+- **Efficient Resource Usage:** Optimized for running on standard hardware while maintaining good performance
+- **All features from previous version remain, including:**
+  * Domain-Specific Knowledge Base (CUDA documentation)
+  * Text Chunking & Embedding
+  * Vector Search with FAISS
+  * User-Friendly Interface
+
+## New System Requirements
+- Python 3.7+
+- 8GB RAM recommended
+- CPU or GPU for model inference
+
+## Updated Installation
+```bash
+python -m venv cuda_chatbot_env
+source cuda_chatbot_env/bin/activate  # On Windows: cuda_chatbot_env\Scripts\activate
+pip install -r requirements.txt
+```
+
+## Model Details
+The system now uses:
+- **Embedding Model:** Sentence-Transformers (all-MiniLM-L6-v2)
+- **Text Generation:** FLAN-T5-small (easily upgradeable to larger models if more resources available)
+- **Vector Storage:** FAISS (CPU version)

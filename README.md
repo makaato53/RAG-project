@@ -1,70 +1,77 @@
-# CUDA RAG Chatbot
+Scientific Paper & CUDA Implementation Assistant
+Overview
+This project implements a Retrieval-Augmented Generation (RAG) chatbot with dual functionality:
 
-## Overview
-This project implements a Retrieval-Augmented Generation (RAG) chatbot specifically focused on the domain of **CUDA**. The chatbot retrieves relevant content from a knowledge base built from CUDA documentation, tutorials, FAQs, and other text-based resources. It then uses this context to generate precise, contextually informed responses. This project is ideal for demonstrating your proficiency with AI techniques and your deep interest in CUDA technology.
+Assists researchers in understanding and implementing ML/AI research papers
+Provides guidance for CUDA implementation and optimization of ML/AI algorithms
 
-## Features
-- **Domain-Specific Knowledge Base:**  
-  The chatbot is powered by a curated collection of CUDA-related texts (documentation, tutorials, blog posts, etc.), which are preprocessed and chunked into manageable pieces.
-- **Text Chunking & Embedding:**  
-  The data is processed by splitting long documents into ~200–500 token chunks. These chunks are then embedded using Sentence Transformers to create vector representations.
-- **Vector Search with FAISS:**  
-  Uses FAISS (or FAISS-GPU if desired) for efficient similarity search, allowing rapid retrieval of relevant CUDA content.
-- **LLM Integration for Answer Generation:**  
-  Augments the retrieved context by integrating with a language model (e.g., OpenAI’s gpt-3.5-turbo) to produce coherent answers about CUDA topics.
-- **User-Friendly Interface:**  
-  A web application built with Streamlit that allows users to enter queries and view responses in real time.
+The system helps bridge the gap between theoretical research and efficient GPU implementation by combining paper comprehension with CUDA expertise.
+Features
 
-## Project Structure
-├── README.md # Project overview and instructions ├── app.py # Main Streamlit application ├── knowledge_base.csv # CSV file containing CUDA-related texts (columns: id, text, [optional: source]) ├── embeddings.pkl # (Auto-generated) Precomputed embeddings for the knowledge base ├── requirements.txt # List of Python dependencies └── Dockerfile # (Optional) Docker configuration for containerized deployment
+Research Paper Processing:
+Processes academic papers in PDF format, breaking them down into meaningful chunks while preserving mathematical notation and technical details.
+CUDA Implementation Guidance:
+Provides specific CUDA implementation strategies for ML/AI algorithms, drawing from NVIDIA's documentation and best practices.
+Intelligent Summarization:
+Offers concise summaries of research papers and maps theoretical concepts to practical CUDA implementations.
+Text Chunking & Embedding:
+Advanced embedding techniques to maintain context across both research papers and CUDA documentation.
+Vector Search with FAISS:
+Efficient similarity search to retrieve relevant content from both papers and CUDA guides.
+LLM Integration:
+Uses Hugging Face's FLAN-T5 model for generating contextually accurate responses.
 
-markdown
-Copy
+Project Structure
+project/
+├── notebooks/
+│   ├── 01_data_preparation.ipynb    # PDF extraction and CUDA doc processing
+│   ├── 02_embeddings.ipynb          # Vector embeddings and search
+│   ├── 03_model_testing.ipynb       # Response generation testing
+│   └── 04_quality_improvement.ipynb  # Response quality optimization
+├── app.py                           # Streamlit web application
+├── requirements.txt                 # Project dependencies
+└── Dockerfile                      # Container configuration
+Usage
+Document Processing
 
-## Domain & Knowledge Base Preparation
+Upload either:
 
-### Choosing the Domain: CUDA
-- **Why CUDA?**  
-  CUDA is a popular parallel computing platform and programming model developed by NVIDIA. With extensive documentation and a strong community, it’s an excellent domain to demonstrate technical expertise and showcase AI capabilities in retrieving and processing complex technical information.
-  
-### Data Gathering
-- **Sources:**  
-  Gather CUDA documentation, official tutorials, blog posts, and FAQs from trusted sources (e.g., NVIDIA’s official documentation, reputable tech blogs, and academic materials).
-  
-- **Data Format:**  
-  Store the text in a simple CSV file (`knowledge_base.csv`) with at least the following columns:
-  - `id`: Unique identifier for each document chunk.
-  - `text`: The content chunk (200–500 tokens per chunk).
-  - Optionally, `source`: A reference to the original document.
-  
-- **Chunking:**  
-  For lengthy documents, split the text into smaller chunks. This ensures that the retrieval system can locate and return the most relevant parts when a query is made.
+A research paper in PDF format
+CUDA-related documentation
 
-# CUDA RAG Chatbot with Local LLM
 
-## Updated Features
-- **Local LLM Integration:** Uses Hugging Face's FLAN-T5 model for response generation, eliminating the need for API keys
-- **Efficient Resource Usage:** Optimized for running on standard hardware while maintaining good performance
-- **All features from previous version remain, including:**
-  * Domain-Specific Knowledge Base (CUDA documentation)
-  * Text Chunking & Embedding
-  * Vector Search with FAISS
-  * User-Friendly Interface
+The system will:
 
-## New System Requirements
-- Python 3.7+
-- 8GB RAM recommended
-- CPU or GPU for model inference
+Extract and preserve technical content
+Generate embeddings for intelligent retrieval
+Enable detailed queries about implementation
 
-## Updated Installation
-```bash
-python -m venv cuda_chatbot_env
-source cuda_chatbot_env/bin/activate  # On Windows: cuda_chatbot_env\Scripts\activate
+
+
+Query Examples
+
+"Summarize the methodology section and suggest CUDA optimization strategies"
+"How would I implement this neural network layer efficiently in CUDA?"
+"What are the key considerations for parallelizing this algorithm on a GPU?"
+"Show me the CUDA implementation for this paper's main algorithm"
+
+Environment Setup & Installation
+1. System Requirements
+
+Python 3.7+
+Optional (for GPU acceleration): NVIDIA GPU with CUDA
+
+2. Installation
+python -m venv paper_cuda_env
+source paper_cuda_env/bin/activate  # On Windows: paper_cuda_env\Scripts\activate
 pip install -r requirements.txt
-```
 
-## Model Details
-The system now uses:
-- **Embedding Model:** Sentence-Transformers (all-MiniLM-L6-v2)
-- **Text Generation:** FLAN-T5-small (easily upgradeable to larger models if more resources available)
-- **Vector Storage:** FAISS (CPU version)
+Docker Deployment
+
+To run the application using Docker:
+# Build the container
+docker build -t paper-cuda-assistant .
+
+# Run the container
+docker run -p 8501:8501 paper-cuda-assistant
+Then visit http://localhost:8501 in your browser.
